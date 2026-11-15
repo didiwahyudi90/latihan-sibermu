@@ -1,9 +1,9 @@
-# Latihan Semester 1 · Sistem Informasi
+# Latihan SiberMu · Sistem Informasi
 
-Aplikasi latihan mandiri untuk mata kuliah semester 1 S1 Sistem Informasi: rangkuman per pertemuan, soal pilihan ganda dengan pembahasan, kartu hafalan berjeda, soal variasi hitungan, simulasi UTS/UAS, dan peta konsep yang masih lemah.
+Aplikasi latihan mandiri untuk mata kuliah S1 Sistem Informasi SiberMu (saat ini semester 1; semester berikutnya menyusul): rangkuman per pertemuan, soal pilihan ganda dengan pembahasan, kartu hafalan berjeda, soal variasi hitungan, simulasi UTS/UAS, dan peta konsep yang masih lemah.
 
-**Buka aplikasi:** https://didiwahyudi90.github.io/latihan-semester-1/
-**Cara pakai:** https://didiwahyudi90.github.io/latihan-semester-1/panduan.html
+**Buka aplikasi:** https://latihan-sibermu-si.vercel.app
+**Cara pakai:** https://latihan-sibermu-si.vercel.app/panduan
 
 ## Isi
 | File | Fungsi |

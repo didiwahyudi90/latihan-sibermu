@@ -10,8 +10,10 @@ Aplikasi latihan mandiri untuk mata kuliah S1 Sistem Informasi SiberMu (saat ini
 |---|---|
 | `index.html` | Aplikasi (satu halaman, tanpa server) |
 | `panduan.html` + `panduan/` | Panduan bergambar untuk pengguna baru |
-| `bank_SIF004.js` | Bank soal Pemrograman Web Dinamis |
-| `gen_SIF004.js` | Pembuat soal variasi (kunci dihitung otomatis) |
+| `bank_*.js` | Bank soal per mata kuliah (SIF004 Pemrograman Web Dinamis, SIF001 Algoritma dan Pemrograman, …) |
+| `gen_*.js` | Pembuat soal variasi hitungan/kode (kunci dihitung otomatis) |
+| `fakta_*.js` | Fakta materi; aplikasi mengembangkannya jadi soal 5W1H yang diacak tiap latihan |
+| `koding.html`, `tantangan.js` | Editor koding ala OnlineGDB (C++, PHP, Python via Wandbox; HTML/JS & SQL di browser) dengan tantangan dari latihan dosen |
 
 ## Menambah soal
 Setiap soal di `bank_*.js` berformat:

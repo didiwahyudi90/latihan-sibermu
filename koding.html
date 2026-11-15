@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Latihan koding · Latihan S1</title>
+<style>
+@font-face{font-family:"Archivo";src:url("archivo.woff2") format("woff2");font-weight:100 900;font-stretch:62% 125%;font-display:swap}
+:root{--paper:#fff;--floor:#f4f5f7;--line:#e2e5e9;--ink:#1c2026;--steel:#5b6470;--red:#d0021b;--red-d:#a30015;--green:#1b8a3a;--amber:#e8a200;--ed:#1e2228;--ed2:#262b33;--edl:#3a414c;--edt:#e6e9ee;--mono:ui-monospace,"Cascadia Code","Consolas","Menlo",monospace}
+*{box-sizing:border-box}html,body{height:100%}
+body{margin:0;background:var(--floor);color:var(--ink);font:400 15px/1.5 "Archivo",system-ui,sans-serif;display:grid;grid-template-columns:300px 1fr;grid-template-rows:auto 1fr;height:100vh}
+button,select{font:inherit}
+header{grid-column:1/-1;display:flex;align-items:center;gap:14px;padding:10px 18px;background:var(--paper);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-stretch:75%;font-weight:800;font-size:19px;text-decoration:none;color:inherit}.brand i{width:10px;height:24px;background:var(--red);border-radius:2px}
+header .sp{flex:1}
+header a.back{color:var(--steel);text-decoration:none;font-weight:600;font-size:14px}
+aside{background:var(--paper);border-right:1px solid var(--line);overflow:auto;padding:14px}
+aside h2{font-stretch:78%;font-weight:800;font-size:22px;margin:4px 0 10px}
+aside select{width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:6px;background:var(--paper);margin-bottom:10px}
+.ch{display:grid;grid-template-columns:22px 1fr;gap:8px;width:100%;text-align:left;background:none;border:0;border-radius:6px;padding:8px;cursor:pointer;color:inherit}
+.ch:hover{background:var(--floor)}.ch.on{background:#fdecee}
+.ch .st{width:18px;height:18px;border-radius:50%;border:2px solid var(--line);margin-top:2px}.ch .st.ok{background:var(--green);border-color:var(--green)}
+.ch b{display:block;font-weight:700;font-size:14px}.ch small{color:var(--steel);font-size:12.5px}
+.grp{font-size:12.5px;color:var(--steel);font-weight:700;margin:12px 0 4px 6px}
+main{display:grid;grid-template-rows:auto auto 1fr;min-width:0;min-height:0}
+.task{background:var(--paper);border-bottom:1px solid var(--line);padding:14px 20px;max-height:34vh;overflow:auto}
+.task h1{font-stretch:78%;font-weight:800;font-size:26px;line-height:1.1;margin:0 0 6px}
+.task p{margin:6px 0;max-width:80ch}.task .meta{color:var(--steel);font-size:13px}
+.task pre{background:var(--floor);border:1px solid var(--line);border-radius:6px;padding:8px 10px;font:13px/1.45 var(--mono);margin:6px 0;white-space:pre-wrap}
+.task details{margin-top:6px}.task summary{cursor:pointer;font-weight:600;color:var(--steel)}
+.bar{display:flex;gap:6px;align-items:center;background:var(--ed2);padding:6px 10px;flex-wrap:wrap}
+.bar button{border:0;border-radius:4px;padding:7px 14px;font-weight:700;cursor:pointer;color:#fff;background:var(--edl)}
+.bar button.run{background:var(--green)}.bar button.chk{background:var(--red)}
+.bar button:disabled{opacity:.5;cursor:wait}
+.bar select{background:var(--edl);color:#fff;border:0;border-radius:4px;padding:7px 8px}
+.bar .lbl{color:#aab2bf;font-size:13px;margin-left:auto}
+.work{display:grid;grid-template-rows:1fr 230px;min-height:0}
+.editor{position:relative;display:grid;grid-template-columns:48px 1fr;background:var(--ed);min-height:0;overflow:hidden}
+.gut{background:var(--ed2);color:#6b7480;font:14px/21px var(--mono);text-align:right;padding:10px 8px 10px 0;overflow:hidden;user-select:none;white-space:pre}
+textarea.code{background:var(--ed);color:var(--edt);border:0;outline:0;resize:none;font:14px/21px var(--mono);padding:10px 12px;tab-size:4;white-space:pre;overflow:auto;caret-color:#ffd166}
+.io{display:grid;grid-template-columns:1fr 2fr;border-top:1px solid #000;min-height:0}
+.io>div{display:grid;grid-template-rows:auto 1fr;min-height:0;background:#fff}
+.io .hd{display:flex;gap:4px;align-items:center;background:var(--floor);border-bottom:1px solid var(--line);padding:4px 8px;font-size:13px;font-weight:700;color:var(--steel)}
+.io .hd button{border:0;background:none;font-weight:700;color:var(--steel);padding:4px 8px;border-radius:4px;cursor:pointer}.io .hd button.on{background:#fff;color:var(--ink);box-shadow:0 0 0 1px var(--line)}
+.io textarea{border:0;outline:0;resize:none;font:13.5px/1.45 var(--mono);padding:8px 10px}
+#out{margin:0;padding:8px 10px;font:13.5px/1.45 var(--mono);white-space:pre-wrap;overflow:auto}
+#out .err{color:var(--red-d)}#out .ok{color:var(--green);font-weight:700}#out .dim{color:var(--steel)}
+#out table{border-collapse:collapse;margin:6px 0;font:13px var(--mono)}#out td,#out th{border:1px solid var(--line);padding:3px 8px;text-align:left}#out th{background:var(--floor)}
+#prev{width:100%;height:100%;border:0;background:#fff;display:none}
+@media (max-width:900px){header .sub{display:none}body{grid-template-columns:1fr;grid-template-rows:auto auto 1fr;height:auto;min-height:100vh}aside{max-height:none;border-right:0;border-bottom:1px solid var(--line)}#list{display:none}aside.open #list{display:block}.work{grid-template-rows:55vh 300px}.io{grid-template-columns:1fr}.io>div:first-child{max-height:120px}.task{max-height:none}}
+:focus-visible{outline:2px solid #1f5fbf;outline-offset:2px}
+</style>
+</head>
+<body>
+<header><a class="brand" href="index.html"><i></i>Latihan S1</a><span class="sub" style="color:var(--steel)">Latihan koding</span><span class="sp"></span><a class="back" href="index.html">Kembali ke aplikasi</a></header>
+<aside id="side"><h2>Tantangan</h2>
+<select id="mk" aria-label="Mata kuliah"></select>
+<button class="ch" style="display:none" id="tg" onclick="side.classList.toggle('open')"><span></span><b>Tampilkan daftar tantangan</b></button>
+<div id="list"></div></aside>
+<main>
+<section class="task" id="task"></section>
+<div class="bar"><button class="run" id="bRun" onclick="run()">▶ Run</button><button class="chk" id="bChk" onclick="check()">Periksa jawaban</button><button onclick="resetCode()">Reset kode</button>
+<select id="lang" aria-label="Bahasa" onchange="setLang(this.value,true)"><option value="cpp">C++</option><option value="web">HTML/CSS/JS</option><option value="js">JavaScript (konsol)</option><option value="php">PHP</option><option value="sql">SQL</option><option value="py">Python</option></select>
+<span class="lbl" id="hint">Ctrl + Enter untuk Run</span></div>
+<div class="work">
+<div class="editor"><div class="gut" id="gut">1</div><textarea class="code" id="code" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="Editor kode"></textarea></div>
+<div class="io"><div><div class="hd">Input (stdin)</div><textarea id="stdin" placeholder="Isi input untuk cin / fgets di sini, satu nilai per baris"></textarea></div>
+<div><div class="hd"><button class="on" id="tOut" onclick="tab('out')">Output</button><button id="tPrev" onclick="tab('prev')">Preview</button></div><div style="position:relative;min-height:0;overflow:auto"><pre id="out"><span class="dim">Tekan Run untuk menjalankan kode.</span></pre><iframe id="prev" sandbox="allow-scripts allow-modals allow-forms allow-same-origin" title="Preview halaman"></iframe></div></div></div>
+</div></main>
+<script src="tantangan.js"></script>
+<script src="lib/sql-wasm.js"></script>
+<script>
+"use strict";
+const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const CH=window.TANTANGAN||[],MK={SIF001:'Algoritma dan Pemrograman',SIF004:'Pemrograman Web Dinamis',SIF002:'Basis Data',BEBAS:'Editor bebas'};
+const KEY='latihan_koding_v1';let S;try{S=JSON.parse(localStorage.getItem(KEY))}catch(e){}S=S||{code:{},ok:{}};const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+const STARTER={cpp:'#include <iostream>\nusing namespace std;\n\nint main() {\n    cout << "Halo, SiberMu!" << endl;\n    return 0;\n}\n',php:'<?php\n$nama = "Mahasiswa SiberMu";\necho "Halo, $nama!\\n";\n',js:'let nama = "Mahasiswa";\nconsole.log("Halo, " + nama);\n',web:'<!DOCTYPE html>\n<html>\n<head>\n  <style>\n    body { font-family: Arial; }\n  </style>\n</head>\n<body>\n  <h1>Halo!</h1>\n  <script>\n    console.log("halaman dimuat");\n  <\/script>\n</body>\n</html>\n',sql:'SELECT * FROM buku;\n',py:'nama = "Mahasiswa"\nprint("Halo,", nama)\n'};
+const WB={cpp:'gcc-13.2.0',php:'php-8.3.12',py:'cpython-3.12.7'};
+let cur=null,lang='cpp';
+// ---------- daftar ----------
+const q=new URLSearchParams(location.search);
+const mks=[...new Set(CH.map(c=>c.kode))];$('#mk').innerHTML=mks.map(k=>`<option value="${k}">${esc(MK[k]||k)}</option>`).join('')+'<option value="BEBAS">Editor bebas (tanpa tantangan)</option>';
+$('#mk').value=q.get('mk')&&(mks.includes(q.get('mk'))||q.get('mk')==='BEBAS')?q.get('mk'):mks[0];
+$('#mk').onchange=()=>{list();const f=CH.find(c=>c.kode===$('#mk').value);f?open_(f.id):bebas()};
+function list(){const k=$('#mk').value,cs=CH.filter(c=>c.kode===k);let g='',h='';cs.forEach(c=>{if(c.grup!==g){g=c.grup;h+=`<div class="grp">${esc(g)}</div>`}h+=`<button class="ch ${cur&&cur.id===c.id?'on':''}" onclick="open_('${c.id}')"><span class="st ${S.ok[c.id]?'ok':''}"></span><span><b>${esc(c.judul)}</b><small>${esc(c.level||'')}</small></span></button>`});$('#list').innerHTML=h||'<p class="grp">Pilih "Editor bebas" untuk menulis kode apa saja.</p>'}
+window.open_=id=>{cur=CH.find(c=>c.id===id);if(!cur)return bebas();history.replaceState(null,'','?mk='+cur.kode+'&id='+cur.id);
+  $('#task').innerHTML=`<div class="meta">${esc(MK[cur.kode]||'')} · ${esc(cur.grup)}${cur.sumber?' · Sumber: '+esc(cur.sumber):''}</div><h1>${esc(cur.judul)}</h1>${cur.soal}${cur.contoh?`<p class="meta" style="margin-top:8px">Contoh</p><pre>${esc(cur.contoh)}</pre>`:''}${cur.lang==='sql'?`<details><summary>Struktur tabel</summary><pre>buku(id_buku, judul, pengarang, tahun, stok)\nanggota(id_anggota, nama, prodi, tgl_daftar, status_aktif)\npeminjaman(id_pinjam, id_buku → buku, id_anggota → anggota, tgl_pinjam, tgl_kembali)</pre></details>`:''}${cur.petunjuk?`<details><summary>Petunjuk</summary><p>${cur.petunjuk}</p></details>`:''}${cur.jawaban?`<details><summary>Lihat contoh jawaban</summary><pre>${esc(cur.jawaban)}</pre></details>`:''}`;
+  setLang(cur.lang);$('#code').value=S.code[cur.id]??cur.awal??(cur.lang==='sql'?'-- Tulis query SQL di sini\n':STARTER[cur.lang]);$('#stdin').value=cur.tests?.[0]?.in??'';$('#bChk').style.display='';gut();out('<span class="dim">Tulis kodemu, lalu tekan Run untuk mencoba atau Periksa jawaban untuk dinilai.</span>');list();if(innerWidth<900)side.classList.remove('open')};
+function bebas(){cur=null;history.replaceState(null,'','?mk=BEBAS');$('#task').innerHTML='<h1>Editor bebas</h1><p>Pilih bahasa di toolbar, tulis kode, lalu tekan Run. C++, PHP, dan Python dijalankan di server compiler publik (perlu internet); HTML/JS dan SQL berjalan langsung di browser.</p><p class="meta">Tabel SQL contoh: <b>buku</b>, <b>anggota</b>, <b>peminjaman</b> (database perpustakaan dari modul Basis Data).</p>';$('#bChk').style.display='none';setLang(S.bebasLang||'cpp');$('#code').value=S.code['bebas_'+lang]??STARTER[lang];gut();list()}
+window.setLang=(l,user)=>{lang=l;$('#lang').value=l;$('#tPrev').style.display=l==='web'?'':'none';tab(l==='web'?'prev':'out');if(user&&!cur){S.bebasLang=l;$('#code').value=S.code['bebas_'+l]??STARTER[l];gut();save()}};
+// ---------- editor ----------
+const ta=$('#code');function gut(){const n=ta.value.split('\n').length;$('#gut').textContent=Array.from({length:n},(_,i)=>i+1).join('\n');$('#gut').scrollTop=ta.scrollTop}
+ta.addEventListener('input',()=>{gut();if(cur)S.code[cur.id]=ta.value;else S.code['bebas_'+lang]=ta.value;save()});ta.addEventListener('scroll',()=>$('#gut').scrollTop=ta.scrollTop);
+ta.addEventListener('keydown',e=>{if(e.key==='Tab'){e.preventDefault();ins('    ')}else if(e.key==='Enter'&&(e.ctrlKey||e.metaKey)){e.preventDefault();run()}else if(e.key==='Enter'){const s=ta.selectionStart,line=ta.value.slice(0,s).split('\n').pop(),ind=line.match(/^\s*/)[0]+(/[{(\[:]\s*$/.test(line)?'    ':'');e.preventDefault();ins('\n'+ind)}});
+function ins(t){const s=ta.selectionStart,e=ta.selectionEnd;ta.value=ta.value.slice(0,s)+t+ta.value.slice(e);ta.selectionStart=ta.selectionEnd=s+t.length;ta.dispatchEvent(new Event('input'))}
+window.resetCode=()=>{if(cur){delete S.code[cur.id];ta.value=cur.awal??STARTER[cur.lang]}else{delete S.code['bebas_'+lang];ta.value=STARTER[lang]}save();gut()};
+window.tab=t=>{$('#tOut').classList.toggle('on',t==='out');$('#tPrev').classList.toggle('on',t==='prev');$('#out').style.display=t==='out'?'':'none';$('#prev').style.display=t==='prev'?'block':'none'};
+const out=h=>{$('#out').innerHTML=h};
+// ---------- runner ----------
+async function wandbox(code,stdin){const r=await fetch('https://wandbox.org/api/compile.json',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({compiler:WB[lang],code,stdin,options:lang==='cpp'?'warning':''})});if(!r.ok)throw new Error('Server compiler menjawab '+r.status);const j=await r.json();return{out:(j.program_output||''),err:[j.compiler_error,j.program_error].filter(Boolean).join('\n'),status:j.status}}
+let SQL=null,DBINIT=null;async function sqlDb(){if(!SQL)SQL=await initSqlJs({locateFile:f=>'lib/'+f});const db=new SQL.Database();db.run(window.SQL_SEED||'');return db}
+function runJs(code,stdin){const lines=String(stdin).split('\n');let i=0,o=[];const con={log:(...a)=>o.push(a.map(x=>typeof x==='object'?JSON.stringify(x):String(x)).join(' '))};const pr=()=>lines[i++]??null;try{new Function('console','prompt','alert',code)(con,pr,m=>o.push('[alert] '+m))}catch(e){return{out:o.join('\n')+(o.length?'\n':''),err:e.name+': '+e.message}}return{out:o.join('\n')+(o.length?'\n':''),err:''}}
+function webDoc(code){const hook=`<script>(function(){const P=(t,a)=>parent.postMessage({__k:1,t,a:a.map(x=>{try{return typeof x==='object'?JSON.stringify(x):String(x)}catch(e){return String(x)}}).join(' ')},'*');const l=console.log;console.log=(...a)=>{P('log',a);l(...a)};console.error=(...a)=>P('err',a);window.onerror=(m,s,ln)=>P('err',[m+' (baris '+ln+')']);window.alert=m=>P('alert',[m]);})();<\/script>`;return /<head[^>]*>/i.test(code)?code.replace(/<head[^>]*>/i,m=>m+hook):hook+code}
+let webLog=[];addEventListener('message',e=>{if(e.data&&e.data.__k){webLog.push(e.data);if(lang==='web'&&!checking)out(renderWebLog())}});
+const renderWebLog=()=>webLog.length?webLog.map(x=>`<span class="${x.t==='err'?'err':''}">${x.t==='alert'?'[alert] ':''}${esc(x.a)}</span>`).join('\n'):'<span class="dim">Halaman ditampilkan di tab Preview. Output console.log akan muncul di sini.</span>';
+function table(res){if(!res.length)return'<span class="dim">Perintah berhasil dijalankan (tidak ada baris yang ditampilkan).</span>';return res.map(r=>`<table><tr>${r.columns.map(c=>`<th>${esc(c)}</th>`).join('')}</tr>${r.values.map(v=>`<tr>${v.map(x=>`<td>${x===null?'<i>NULL</i>':esc(x)}</td>`).join('')}</tr>`).join('')}</table><span class="dim">${r.values.length} baris</span>`).join('')}
+async function exec(code,stdin){if(lang==='js')return runJs(code,stdin);if(lang==='sql'){const db=await sqlDb();try{const r=db.exec(code);return{rows:r,out:'',err:''}}catch(e){return{out:'',err:'Error SQL: '+e.message}}finally{db.close()}}
+  if(lang==='web'){webLog=[];$('#prev').srcdoc=webDoc(code);await new Promise(r=>setTimeout(r,700));return{out:'',err:'',web:1}}
+  return wandbox(code,stdin)}
+let busy=false,checking=false;
+window.run=async()=>{if(busy)return;busy=true;$('#bRun').disabled=$('#bChk').disabled=true;const t0=performance.now();out('<span class="dim">Menjalankan…</span>');
+  try{const r=await exec(ta.value,$('#stdin').value);if(r.web){tab('prev');out(renderWebLog())}else if(r.rows){tab('out');out(table(r.rows))}else{tab('out');out((r.err?`<span class="err">${esc(r.err)}</span>\n`:'')+esc(r.out)+`\n<span class="dim">— selesai dalam ${((performance.now()-t0)/1000).toFixed(1)} detik</span>`)}}
+  catch(e){out(`<span class="err">Kode tidak bisa dijalankan: ${esc(e.message)}.</span>\n<span class="dim">C++, PHP, dan Python dijalankan oleh compiler online, jadi perlu koneksi internet. Coba lagi beberapa saat.</span>`)}
+  busy=false;$('#bRun').disabled=$('#bChk').disabled=false};
+const norm=s=>String(s).replace(/\r/g,'').split('\n').map(l=>l.replace(/\s+$/,'')).join('\n').replace(/\n+$/,'').trim();
+window.check=async()=>{if(!cur||busy)return;busy=checking=true;$('#bRun').disabled=$('#bChk').disabled=true;tab('out');out('<span class="dim">Memeriksa…</span>');let html='',all=true;
+  try{if(cur.lang==='sql'){const db=await sqlDb(),db2=await sqlDb();let a,b;try{a=db.exec(ta.value)}catch(e){a=null;html=`<span class="err">Error SQL: ${esc(e.message)}</span>\n`}try{b=db2.exec(cur.jawaban)}finally{}
+      const pick=r=>r&&r.length?r[r.length-1]:{columns:[],values:[]};const A=pick(a),B=pick(b);const key=r=>JSON.stringify(r.values.map(v=>v.map(x=>x===null?null:String(x))));
+      const same=a&&A.values.length===B.values.length&&(cur.urut?key(A)===key(B):JSON.stringify(A.values.map(v=>JSON.stringify(v.map(String))).sort())===JSON.stringify(B.values.map(v=>JSON.stringify(v.map(String))).sort()));
+      if(!same)all=false;
+      if(a)html+=(same?'':'<span class="err">Hasil query belum sesuai yang diminta.</span>\nHasil kamu:')+table(a.length?[A]:[])+(same?'':'\nHasil yang diharapkan:'+table([B]));db.close();db2.close()}
+    else if(cur.lang==='web'){tab('prev');webLog=[];$('#prev').srcdoc=webDoc(ta.value);await new Promise(r=>setTimeout(r,900));const d=$('#prev').contentDocument;
+      for(const t of cur.tests){let ok=false;try{ok=!!(await new Function('doc','win','log',t.f)(d,$('#prev').contentWindow,webLog.map(x=>x.a)))}catch(e){ok=false}if(!ok)all=false;html+=`${ok?'<span class="ok">✓</span>':'<span class="err">✗</span>'} ${esc(t.n)}\n`}}
+    if(cur.lang==='web')tab('out');
+    else{for(const [i,t] of cur.tests.entries()){const r=await exec(ta.value,t.in||'');const ok=!r.err||/warning/i.test(r.err)&&!/error/i.test(r.err)?norm(r.out)===norm(t.out):false;if(!ok)all=false;
+      html+=`${ok?'<span class="ok">✓ Uji '+(i+1)+' lulus</span>':'<span class="err">✗ Uji '+(i+1)+' belum lulus</span>'}${t.in?`\n<span class="dim">Input:</span> ${esc(t.in.replace(/\n/g,' ⏎ '))}`:''}${ok?'':`\n<span class="dim">Output yang diharapkan:</span>\n${esc(t.out)}\n<span class="dim">Output kamu:</span>\n${r.err&&!/warning/i.test(r.err)?`<span class="err">${esc(r.err)}</span>`:esc(r.out)}`}\n\n`;if(!ok&&i>=1)break}}}
+  catch(e){all=false;html=`<span class="err">Tidak bisa memeriksa: ${esc(e.message)}. Periksa koneksi internet lalu coba lagi.</span>`}
+  for(const [re,msg] of (cur.wajib||[])){if(!new RegExp(re,'i').test(ta.value)){all=false;html=`<span class="err">${esc(msg)}</span>\n`+html}}
+  if(all){S.ok[cur.id]=1;save();list()}out((all?'<span class="ok">Semua uji lulus. Tantangan selesai!</span>\n\n':'<span class="err">Belum semua uji lulus. Perbaiki kode lalu periksa lagi.</span>\n\n')+html);busy=checking=false;$('#bRun').disabled=$('#bChk').disabled=false};
+list();const id0=q.get('id');if($('#mk').value==='BEBAS')bebas();else{const p=q.get('p');const f=CH.find(c=>c.id===id0)||CH.find(c=>c.kode===$('#mk').value&&(!p||c.p===p))||CH.find(c=>c.kode===$('#mk').value);f?open_(f.id):bebas()}
+if(innerWidth<900){$('#tg').style.display='grid'}
+</script>
+</body>
+</html>

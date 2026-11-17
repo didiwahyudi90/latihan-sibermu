@@ -23,3 +23,8 @@ Setiap soal di `bank_*.js` berformat:
 
 ## Catatan
 Proyek belajar mandiri, bukan aplikasi resmi kampus. Soal disusun dari modul dan video perkuliahan. Temukan kunci yang keliru? Buka *Issue* di repositori ini.
+
+## Akun (progres per orang)
+- Tombol **Masuk** di bilah atas: daftar cukup nama pengguna + kata sandi (tanpa email). Progres latihan dan koding tersimpan di akun dan ikut ke perangkat lain. Tanpa masuk, progres tetap di browser seperti biasa.
+- Server: `api/akun.js` (Vercel Function) + Upstash Redis dari Vercel Storage. Butuh env `KV_REST_API_URL` dan `KV_REST_API_TOKEN` (otomatis terisi saat database Upstash dihubungkan ke proyek). Selama belum diatur, tombol Masuk disembunyikan.
+- Kata sandi disimpan sebagai hash scrypt; sesi berlaku 90 hari; percobaan masuk dibatasi 10 kali per 15 menit.

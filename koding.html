@@ -52,7 +52,7 @@ textarea.code{background:var(--ed);color:var(--edt);border:0;outline:0;resize:no
 </style>
 </head>
 <body>
-<header><a class="brand" href="index.html"><i></i>Latihan S1</a><span class="sub" style="color:var(--steel)">Latihan koding</span><span class="sp"></span><a class="back" href="index.html">Kembali ke aplikasi</a></header>
+<header><a class="brand" href="index.html"><i></i>Latihan S1</a><span class="sub" style="color:var(--steel)">Latihan koding</span><span class="sp"></span><button class="ak-chip" id="akunChip" hidden>Masuk</button><a class="back" href="index.html">Kembali ke aplikasi</a></header>
 <aside id="side"><h2>Tantangan</h2>
 <select id="mk" aria-label="Mata kuliah"></select>
 <button class="ch" style="display:none" id="tg" onclick="side.classList.toggle('open')"><span></span><b>Tampilkan daftar tantangan</b></button>
@@ -67,13 +67,14 @@ textarea.code{background:var(--ed);color:var(--edt);border:0;outline:0;resize:no
 <div class="io"><div><div class="hd">Input (stdin)</div><textarea id="stdin" placeholder="Isi input untuk cin / fgets di sini, satu nilai per baris"></textarea></div>
 <div><div class="hd"><button class="on" id="tOut" onclick="tab('out')">Output</button><button id="tPrev" onclick="tab('prev')">Preview</button></div><div style="position:relative;min-height:0;overflow:auto"><pre id="out"><span class="dim">Tekan Run untuk menjalankan kode.</span></pre><iframe id="prev" sandbox="allow-scripts allow-modals allow-forms allow-same-origin" title="Preview halaman"></iframe></div></div></div>
 </div></main>
+<script src="akun.js"></script>
 <script src="tantangan.js"></script>
 <script src="lib/sql-wasm.js"></script>
 <script>
 "use strict";
 const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const CH=window.TANTANGAN||[],MK={SIF001:'Algoritma dan Pemrograman',SIF004:'Pemrograman Web Dinamis',SIF002:'Basis Data',BEBAS:'Editor bebas'};
-const KEY='latihan_koding_v1';let S;try{S=JSON.parse(localStorage.getItem(KEY))}catch(e){}S=S||{code:{},ok:{}};const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+const KEY=AKUN.key('latihan_koding_v1');let S;try{S=JSON.parse(localStorage.getItem(KEY))}catch(e){}S=S||{code:{},ok:{}};const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){};AKUN.simpan()};AKUN.mulai('koding','latihan_koding_v1',()=>S);
 const STARTER={cpp:'#include <iostream>\nusing namespace std;\n\nint main() {\n    cout << "Halo, SiberMu!" << endl;\n    return 0;\n}\n',php:'<?php\n$nama = "Mahasiswa SiberMu";\necho "Halo, $nama!\\n";\n',js:'let nama = "Mahasiswa";\nconsole.log("Halo, " + nama);\n',web:'<!DOCTYPE html>\n<html>\n<head>\n  <style>\n    body { font-family: Arial; }\n  </style>\n</head>\n<body>\n  <h1>Halo!</h1>\n  <script>\n    console.log("halaman dimuat");\n  <\/script>\n</body>\n</html>\n',sql:'SELECT * FROM buku;\n',py:'nama = "Mahasiswa"\nprint("Halo,", nama)\n'};
 const WB={cpp:'gcc-13.2.0',php:'php-8.3.12',py:'cpython-3.12.7'};
 let cur=null,lang='cpp';

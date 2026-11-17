@@ -100,7 +100,7 @@
       return { q: "Output kode PHP berikut…", code: `<?php\n$harga = ${h};\n$jumlah = ${j};\necho "Total: " . $harga * $jumlah;\n?>`, ...opts("Total: " + h * j, ["Total: " + h + j, "Total: " + (h + j), "Total: $harga * $jumlah", "Error"]),
         why: `Perkalian dihitung dulu (${h} × ${j} = ${h * j}), lalu digabung dengan teks.` }; } },
     { p: "P10", tag: "php-string", make() {
-      const n = pick(["Didi", "Ahmad", "Citra"]); const q = pick(['"', "'"]);
+      const n = pick(["Rina", "Ahmad", "Citra"]); const q = pick(['"', "'"]);
       return { q: "Output kode PHP berikut…", code: `<?php\n$nama = "${n}";\necho ${q}Halo $nama${q};\n?>`, ...opts(q === '"' ? "Halo " + n : "Halo $nama", [q === '"' ? "Halo $nama" : "Halo " + n, "Halo", "Error", "$nama"]),
         why: q === '"' ? "Kutip ganda mengganti variabel dengan nilainya." : "Kutip tunggal menampilkan teks apa adanya." }; } },
     { p: "P13", tag: "sql", make() {
